@@ -55,6 +55,8 @@ public class Camera2Activity extends AppCompatActivity {
 
     private ImageReader mImageReader;
 
+    private Integer mCameraSensorOrientation ;
+
 
     /**
      * An additional thread for running tasks that shouldn't block the UI.
@@ -253,6 +255,7 @@ public class Camera2Activity extends AppCompatActivity {
                     continue;
                 }
 
+                mCameraSensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
 
                 // For still image captures, we use the largest available size.
                 Size largest = Collections.max(
@@ -415,6 +418,8 @@ public class Camera2Activity extends AppCompatActivity {
             captureBuilder.addTarget(mImageReader.getSurface());
 
             captureBuilder.set(CaptureRequest.CONTROL_AF_MODE,CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE);
+
+            captureBuilder.set(CaptureRequest.JPEG_ORIENTATION,mCameraSensorOrientation);
 
             int rotation = this.getWindowManager().getDefaultDisplay().getRotation();
 
